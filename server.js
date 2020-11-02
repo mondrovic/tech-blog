@@ -4,6 +4,8 @@ const session = require("express-session");
 const exphbs = require("express-handlebars");
 const helpers = require("./utils/helper");
 
+require("dotenv").config();
+
 const app = express();
 const PORT = process.env.PORT || 3002;
 
@@ -11,10 +13,11 @@ const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
-  secret: "this be my random secret matey",
+  secret: process.env.DB_SCRT,
   cookie: {},
   resave: false,
   saveUninitialized: true,
+  expires: new Date(Date.now() + 30 * 86400 * 500),
   store: new SequelizeStore({
     db: sequelize,
   }),
@@ -24,7 +27,6 @@ app.use(session(sess));
 
 const hbs = exphbs.create({
   layoutsDir: path.join(__dirname, "/views/layouts"),
-  defaultLayout: "main.handlebars",
   partialsDir: path.join(__dirname, "/views/partials"),
   helpers: helpers,
 });

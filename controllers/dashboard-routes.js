@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const { Post, User, Comment, Vote } = require("../models");
+const { Post, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
 // get all posts for dashboard
@@ -13,7 +13,7 @@ router.get("/", withAuth, (req, res) => {
     include: [
       {
         model: Comment,
-        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+        attributes: ["id", "comment_body", "post_id", "user_id", "created_at"],
         include: {
           model: User,
           attributes: ["username"],
@@ -41,7 +41,7 @@ router.get("/edit/:id", withAuth, (req, res) => {
     include: [
       {
         model: Comment,
-        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+        attributes: ["id", "comment_body", "post_id", "user_id", "created_at"],
         include: {
           model: User,
           attributes: ["username"],
