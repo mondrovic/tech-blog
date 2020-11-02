@@ -24,7 +24,6 @@ app.use(session(sess));
 
 const hbs = exphbs.create({
   layoutsDir: path.join(__dirname, "/views/layouts"),
-  defaultLayout: "main.handlebars",
   partialsDir: path.join(__dirname, "/views/partials"),
   helpers: helpers,
 });
